@@ -69,7 +69,7 @@ ul li a:hover {
   cursor: pointer;
 }
 
-form {
+.foooter-form {
   padding-bottom: 15px;
   display: flex;
   align-items: center;

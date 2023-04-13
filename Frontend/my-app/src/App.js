@@ -10,6 +10,8 @@ import audio from "./audio/audio.mp3";
 import CaroselHeading from "./components/Carosel/CaroselHeading";
 import Productdetails from "./components/Product/Productdetails";
 import Products from "./components/Product/Products";
+import SearchPage from "./components/Search/SearchPage";
+
 
 function App() {
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
@@ -33,7 +35,8 @@ function App() {
 
         <Route  path="/product/:id"   element={<Productdetails/>}/>
         <Route  path="/products"   element={<Products/>}/>
-
+        <Route  path="/products/:keyword"   element={<Products/>}/>
+        <Route  path="/Search" element={<SearchPage/>} />
          
         </Routes>
         <Footer/>

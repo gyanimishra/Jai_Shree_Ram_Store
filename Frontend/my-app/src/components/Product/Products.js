@@ -14,9 +14,9 @@ import { clearErrors, getAllProducts } from '../../Redux/Actions/productAction';
 
 
 const categories = [
-    "Laptop",
+    "cloths",
     "Footwear",
-    "Bottom",
+    "locket",
     "Tops",
     "cloths",
     "Camera",
@@ -53,14 +53,15 @@ const Products = () => {
         setPrice(newPrice);
       };
       const {keyword} =useParams()
+      console.log(keyword,"keyword")
       useEffect(() => {
         if (error) {
           alert.error(error);
           dispatch(clearErrors());
         }
     
-        dispatch(getAllProducts(keyword,currentPage,price,category,ratings));
-      }, [dispatch,keyword, alert, error,currentPage,price,category,ratings]);
+        dispatch(getAllProducts(keyword,category));
+      }, [dispatch,keyword, alert, error,category]);
     
   return (
     <Fragment>

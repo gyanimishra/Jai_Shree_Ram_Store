@@ -3,17 +3,23 @@ import { ALL_PRODUCT_FAIL, ALL_PRODUCT_REQUEST, ALL_PRODUCT_SUCCESS, CLEAR_ERROR
 
 
 // getallproducts........................................................
-export const getAllProducts = ()=> async(dispatch)=>{
+export const getAllProducts =(keyword = "",category)=>async(dispatch)=>{
 try {
     dispatch({
         type:ALL_PRODUCT_REQUEST
     })
-    const {data} = await axios.get("http://localhost:4000/api/v1/Allproducts")
-    dispatch({
-  type:ALL_PRODUCT_SUCCESS,
-  payload:data
-    })
+    let link = `http://localhost:4000/api/v1/Allproducts?keyword=${keyword}`
+
+    if (category) {
+        link = `http://localhost:4000/api/v1/Allproducts?keyword=${keyword}&category=${category}`;
+      }
     
+    const { data } = await axios.get(link);
+   
+    dispatch({
+        type:ALL_PRODUCT_SUCCESS,
+        payload:data
+    })
 } catch (error) {
     dispatch({
         type:ALL_PRODUCT_FAIL,

@@ -44,7 +44,7 @@ const Footer = () => {
 
            <h3>NewsLetter <div className="underline"><span></span></div></h3>
 
-           <form >
+           <form className='foooter-form' >
             <i className="far fa-envelope"></i>
             <input type="text" placeholder="Enter your Email id"/>
             <button type="submit"> <i className="far fa-arrow-right"></i></button>
