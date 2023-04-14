@@ -12,6 +12,7 @@ import Productdetails from "./components/Product/Productdetails";
 import Products from "./components/Product/Products";
 import SearchPage from "./components/Search/SearchPage";
 import LoginSignup from "./components/Authentication/LoginSignup";
+import User from "./components/Authentication/User";
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route  path="/Search" element={<SearchPage/>} />
 
         <Route  path="/Account" element={<LoginSignup/>} />
+        <Route  path="/user" element={<User/>} />
          
         </Routes>
         <Footer/>

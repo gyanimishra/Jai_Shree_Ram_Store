@@ -1,4 +1,5 @@
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import Loader from '../Helper/Loader'
 import './LoginSignnup.css'
 import { Link } from "react-router-dom";
@@ -7,12 +8,15 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
+import { clearErrors, login } from '../../Redux/Actions/UserAction';
 
 
 const LoginSignup = () => {
     const dispatch = useDispatch();
-    const loading = false
+    
   const alert = useAlert();
+
+  const navigate= useNavigate();
   const [avatar, setAvatar] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIowA3ve8PzNPBmxNFcJ4nrG0IWw_ELLtSqMN3Lr0&s");
   const [avatarPreview, setAvatarPreview] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIowA3ve8PzNPBmxNFcJ4nrG0IWw_ELLtSqMN3Lr0&s");
 
@@ -22,6 +26,11 @@ const LoginSignup = () => {
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+
+  const { error, loading, isAuthenticated } = useSelector(
+    (state) => state.user
+  );
+
 
   const [user, setUser] = useState({
     name: "",
@@ -48,6 +57,7 @@ const LoginSignup = () => {
   };
   const loginSubmit = (e) => {
     e.preventDefault();
+    dispatch(login(loginEmail,loginPassword))
    
   };
 
@@ -79,6 +89,18 @@ const LoginSignup = () => {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+
+    if (isAuthenticated) {
+      navigate('/user')
+    }
+  }, [dispatch, error, alert,  isAuthenticated,]);
+
 
   return (
     <Fragment>
