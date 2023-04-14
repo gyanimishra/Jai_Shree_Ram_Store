@@ -11,6 +11,7 @@ import CaroselHeading from "./components/Carosel/CaroselHeading";
 import Productdetails from "./components/Product/Productdetails";
 import Products from "./components/Product/Products";
 import SearchPage from "./components/Search/SearchPage";
+import LoginSignup from "./components/Authentication/LoginSignup";
 
 
 function App() {
@@ -37,6 +38,8 @@ function App() {
         <Route  path="/products"   element={<Products/>}/>
         <Route  path="/products/:keyword"   element={<Products/>}/>
         <Route  path="/Search" element={<SearchPage/>} />
+
+        <Route  path="/Account" element={<LoginSignup/>} />
          
         </Routes>
         <Footer/>
