@@ -1,4 +1,5 @@
 const app = require("./app");
+const mongoose = require("mongoose");
 const cloudinary = require("cloudinary");
 const dotenv= require("dotenv")
 const connectiontoDatabase = require('./database/database')
@@ -16,13 +17,13 @@ dotenv.config({ path: "config/config.env"});
 
 
 // connection to database
-
+mongoose.set("strictQuery", true);
 connectiontoDatabase()
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
+cloudinary.v2.config({
+  cloud_name: "dssxuaia0",
+  api_key:"191775354188293",
+  api_secret:"HrPDZ4aWqCtsDjKzHTHz20srK6E",
 });
 
 

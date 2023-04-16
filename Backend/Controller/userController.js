@@ -1,37 +1,55 @@
 const AsyncAwaitError = require("../Middlewares/AsyncAwaitError");
 const User = require('../Models/userModel');
 const crypto = require("crypto");
+// cle
 const ErrorHandler = require("../utils/ErrorHandler");
 const sendToken = require("../utils/generateJwtToken");
 const sendEmail = require("../utils/sendEmail");
 const cloudinary = require("cloudinary");
+const getDataUri = require("../utils/dataUri");
+const { fileFilter } = require("../utils/fileFilter");
 
 
-// user register
-
+// user register...................................................................................||
+const uploadFile = async (file) => {
+ 
+  const fileUri = getDataUri(file);
+  const timestamp = Math.floor(Date.now() / 1000); // current Unix timestamp
+  const signature = cloudinary.utils.api_sign_request({ timestamp }, "HrPDZ4aWqCtsDjKzHTHz20srK6E");
+  const result = await cloudinary.uploader.upload(fileUri.content, {
+    resource_type: "auto",
+    timestamp,
+    signature
+  });
+  return result;
+};
 
 exports.userRegister = AsyncAwaitError(async (req, res, next) => {
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    folder: "avatars",
-    width: 150,
-    crop: "scale",
-  });
-    const {email,name,password} = req.body;
-    
-    const user = await User.create({
-        name,
-        email,
-        password,
-        avatar: {
-          public_id: myCloud.public_id,
-          url: myCloud.secure_url,
-        },
-      });
+  try {
+    const { email, name, password } = req.body;
+    const file = req.file;
+    const uploadedFile = await uploadFile(file);
 
-      sendToken(user,201,res)
-    
+    const user = await User.create({
+      name,
+      email,
+      password,
+      avatar: {
+        public_id: uploadedFile.public_id,
+        url: uploadedFile.secure_url,
+      },
+    });
+
+    sendToken(user, 201, res);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error });
+  }
 });
 
+
+
+// login...................................................................................||
 exports.userlogin = AsyncAwaitError(async (req, res, next) => {
 
     const { email, password } = req.body;

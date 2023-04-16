@@ -8,7 +8,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
-import { clearErrors, login } from '../../Redux/Actions/UserAction';
+import { clearErrors, login, register } from '../../Redux/Actions/UserAction';
 
 
 const LoginSignup = () => {
@@ -70,6 +70,8 @@ const LoginSignup = () => {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
+
+    dispatch(register(myForm))
     
   };
 
