@@ -17,7 +17,7 @@ const LoginSignup = () => {
   const alert = useAlert();
 
   const navigate= useNavigate();
-  const [avatar, setAvatar] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIowA3ve8PzNPBmxNFcJ4nrG0IWw_ELLtSqMN3Lr0&s");
+  const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIowA3ve8PzNPBmxNFcJ4nrG0IWw_ELLtSqMN3Lr0&s");
 
     const loginTab = useRef(null);
@@ -38,7 +38,8 @@ const LoginSignup = () => {
     password: "",
   });
   const { name, email, password } = user;
- 
+ console.log(user,"user");
+
   const switchTabs = (e, tab) => {
     if (tab === "login") {
       switcherTab.current.classList.add("shiftToNeutral");
@@ -69,24 +70,22 @@ const LoginSignup = () => {
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("password", password);
-    myForm.set("avatar", avatar);
-
+    myForm.set("file", avatar);
+console.log(myForm,"myform")
     dispatch(register(myForm))
     
   };
-
+  
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
-      const reader = new FileReader();
+      setAvatar(e.target.files[0]);
+     
+      // Create a temporary URL for the selected image file
+    const temporaryUrl = URL.createObjectURL(e.target.files[0]);
 
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
+    // Set the temporary URL as the source of an image element to show a preview
+    setAvatarPreview(temporaryUrl);
 
-      reader.readAsDataURL(e.target.files[0]);
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
@@ -188,7 +187,6 @@ const LoginSignup = () => {
                   <input
                     type="file"
                     name="avatar"
-                    accept="image/*"
                     onChange={registerDataChange}
                   />
                 </div>
