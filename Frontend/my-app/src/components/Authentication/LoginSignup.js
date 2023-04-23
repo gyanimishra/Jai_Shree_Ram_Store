@@ -98,7 +98,7 @@ console.log(myForm,"myform")
     }
 
     if (isAuthenticated) {
-      navigate('/user')
+      navigate('/profile')
     }
   }, [dispatch, error, alert,  isAuthenticated,]);
 
